@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package com.grpc.demo;
+
+option java_package = "com.grpc.demo";
+option java_outer_classname = "StudentProto";
+option java_multiple_files = true;
+
+service StudentService {
+    // 根据用户名查询真是姓名
+    rpc GetRealNameByUsername (MyRequest) returns (MyResponse) {}
+    // 根据年龄查询学生
+    rpc GetStudentByAge (StudentRequest) returns (stream StudentResponse){}
+    // 根据多个条件查询学生
+    rpc GetStudentsWrapperByAges (stream StudentRequest) returns (StudentResponseList){}
+}
+
+message MyRequest {
+    string username = 1;
+}
+
+message MyResponse {
+    string realName = 1;
+}
+
+message StudentRequest {
+    int32 age = 1;
+}
+
+message StudentResponse {
+    string name = 1;
+    int32 age = 2;
+    string city = 3;
+}
+
+message StudentResponseList {
+    repeated StudentResponse studentResponse = 1;
+}
